@@ -1,0 +1,8 @@
+# kill startup message
+startup_message off
+        
+# detach on hangup
+autodetach on
+        
+# define a bigger scrollback, default is 100 lines
+defscrollback 100000

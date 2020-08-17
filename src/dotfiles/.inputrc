@@ -1,0 +1,17 @@
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+"\e[3~": delete-char
+"\e[6~": history-search-forward
+"\e[5~": history-search-backward
+"\e[5C": forward-word
+"\e[5D": backward-word
+
+TAB: complete
+
+set editing-mode emacs
+set page-completions on
+set convert-meta off
+set output-meta on
+set bell-style visible
+set completion-query-items 150
+set completion-ignore-case off
