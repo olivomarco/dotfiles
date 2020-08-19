@@ -12,7 +12,7 @@ esac
 echo "machine type detected is: ${machine}"
 
 # get current script directory
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/.."
 
 # main
 echo "doing setup for user ${USER}..."
