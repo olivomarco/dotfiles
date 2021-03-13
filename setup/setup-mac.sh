@@ -45,6 +45,7 @@ brew install sops
 brew install gnupg
 brew install speedtest-cli
 brew install tree
+brew install bitwarden-cli
 
 echo "installing more global software via cask/mas..."
 brew tap caskroom/cask
