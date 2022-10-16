@@ -46,6 +46,9 @@ brew install gnupg
 brew install speedtest-cli
 brew install tree
 brew install bitwarden-cli
+brew install bat
+brew install telnet
+brew install md5sha1sum
 
 echo "installing more global software via cask/mas..."
 brew tap caskroom/cask
@@ -78,6 +81,12 @@ brew cask install krita
 mas install imovie
 brew cask install pixlr
 brew cask install wireshark
+mas install 1352778147 # bitwarden
+mas install 1274495053 # microsoft-todo
+brew install --cask darktable
+brew install --cask homebrew/cask-drivers/gutenprint
+brew install --cask logitech-camera-settings
+brew install --cask adobe-acrobat-reader
 
 echo "installing docker on mac..."
 brew install docker docker-machine

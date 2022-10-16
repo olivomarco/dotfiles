@@ -33,8 +33,15 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+  wget https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -O ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/az-completion
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
-  chsh -s $(which zsh) $USER
+  pip3 install thefuck
+  zsh -c 'git clone https://github.com/wting/autojump.git ~/autojump && cd ~/autojump && ./install.py && cd .. && rm -rf ~/autojump'
+  mkdir -p ~/.oh-my-zsh/completions
+  chmod -R 755 ~/.oh-my-zsh/completions
+  ln -s /opt/kubectx/completion/_kubectx.zsh ~/.oh-my-zsh/completions/_kubectx.zsh
+  ln -s /opt/kubectx/completion/_kubens.zsh ~/.oh-my-zsh/completions/_kubens.zsh
+  sudo chsh -s $(which zsh) $(whoami)
 fi
 
 echo "symlink/copy files..."

@@ -9,7 +9,7 @@ case "${unameOut}" in
 esac
 
 # If you come from bash you might have to change your $PATH.
-PATH=$HOME/bin:$PATH
+PATH=$HOME/bin:$HOME/.local/bin:$HOME/.autojump/bin:/snap/bin:$PATH
 [[ "${machine}" == "mac" ]] && PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/:$PATH
 export PATH
 
@@ -132,6 +132,23 @@ set -o ignoreeof
 GPG_TTY=$(tty); export GPG_TTY
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -x thefuck ] && eval $(thefuck --alias)
+[[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
+autoload -U compinit && compinit -u
+
+source $HOME/.oh-my-zsh/custom/plugins/az-completion
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+#[[ $TERM == "xterm-256color" ]] && [[ -f ~/.p10k-full.zsh ]] && source ~/.p10k-full.zsh
+#[[ $TERM != "xterm-256color" ]] && [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
 [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f ~/google-cloud-sdk/path.zsh.inc ]; then . ~/google-cloud-sdk/path.zsh.inc; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then . ~/google-cloud-sdk/completion.zsh.inc; fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
