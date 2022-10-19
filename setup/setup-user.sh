@@ -50,7 +50,7 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   ln -s /opt/kubectx/completion/_kubectx.zsh ~/.oh-my-zsh/completions/_kubectx.zsh
   ln -s /opt/kubectx/completion/_kubens.zsh ~/.oh-my-zsh/completions/_kubens.zsh
 
-  git clone --depth 1 https://github.com/wulfgarpro/history-sync.git
+  git clone --depth 1 https://github.com/wulfgarpro/history-sync.git ~/history-sync
   cp -r history-sync ~/.oh-my-zsh/plugins
   mkdir $HOME/.zsh_history_proj && cd $HOME/.zsh_history_proj && git init
 
