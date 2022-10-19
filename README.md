@@ -53,6 +53,9 @@ In my experience, this is true both on workstation machines (typically based on 
 For this reason, the following scripts are provided:
 
 * [setup-linux.sh](/setup/setup-linux.sh), which setups the server with a series of useful tools I tend to use in my day-by-day
+* [setup-docker-linux.sh](/setup/setup-docker-linux.sh), which setups docker daemon and kubernetes stuff
+* [setup-dev-linux.sh](/setup/setup-dev-linux.sh), which setups dev-related tools
+* [setup-cloud-linux.sh](/setup/setup-cloud-linux.sh), which setups cloud cli tools
 * [setup-mac.sh](/setup/setup-mac.sh), which installs several tools and programs on a Mac, and makes several configurations I use
 * [setup-windows.bat](/setup/setup-windows.bat), a bat script that installs several utilities on Windows
 

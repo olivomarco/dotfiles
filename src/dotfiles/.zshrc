@@ -95,6 +95,7 @@ history
 kube-ps1
 kubectl
 docker
+history-sync
 )
 
 source $ZSH/oh-my-zsh.sh

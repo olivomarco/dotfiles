@@ -28,19 +28,32 @@ chmod 700 ${HOME}/.ssh
 if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   echo "installing and configuring zsh stuff..."
   [ "${machine}" == "mac" ] && git clone https://github.com/ryanoasis/nerd-fonts --depth 1 ~/nerd-fonts && ~/nerd-fonts/install.sh && rm -rf ~/nerd-fonts
+
   curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+
   git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions
+
   wget https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -O ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/az-completion
+
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
+
   pip3 install thefuck
+
   zsh -c 'git clone https://github.com/wting/autojump.git ~/autojump && cd ~/autojump && ./install.py && cd .. && rm -rf ~/autojump'
   mkdir -p ~/.oh-my-zsh/completions
   chmod -R 755 ~/.oh-my-zsh/completions
+
   ln -s /opt/kubectx/completion/_kubectx.zsh ~/.oh-my-zsh/completions/_kubectx.zsh
   ln -s /opt/kubectx/completion/_kubens.zsh ~/.oh-my-zsh/completions/_kubens.zsh
+
+  git clone --depth 1 https://github.com/wulfgarpro/history-sync.git
+  cp -r history-sync ~/.oh-my-zsh/plugins
+  mkdir $HOME/.zsh_history_proj && cd $HOME/.zsh_history_proj && git init
+
   sudo chsh -s $(which zsh) $(whoami)
 fi
 
