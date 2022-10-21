@@ -48,7 +48,7 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   chmod -R 755 ~/.oh-my-zsh/completions
 
   git clone --depth 1 https://github.com/wulfgarpro/history-sync.git ~/history-sync
-  cp -r history-sync ~/.oh-my-zsh/plugins
+  mv ~/history-sync ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/history-sync
   mkdir $HOME/.zsh_history_proj && cd $HOME/.zsh_history_proj && git init
 
   sudo chsh -s $(which zsh) $(whoami)
