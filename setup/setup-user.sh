@@ -67,9 +67,6 @@ done
 [[ ! -e ${HOME}/.ssh/known_hosts ]] && cp ${DIR}/src/.ssh/known_hosts ${HOME}/.ssh/known_hosts
 [[ "${machine}" == "mac" ]] && ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport $HOME/bin/airport
 
-# echo "set global git options..."
-# git config --global credential.helper store
-
 if [ "${machine}" == "mac" ] ; then
   echo "copying Library/Preferences..."
   cp src/Library/Preferences/* ${HOME}/Library/Preferences/
