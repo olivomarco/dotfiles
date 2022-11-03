@@ -22,7 +22,8 @@ choco install -y dotnetcore-sdk dotnet-5.0-sdk
 choco install -y oraclejdk maven
 choco install -y nodejs
 choco install -y ngrok
-rem choco install -y greenshot eraser caffeine soundswitch
+choco install -y screenpresso
+rem choco install -y eraser caffeine soundswitch
 
 echo install microsoft-specific packages with chocolatey...
 choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh
