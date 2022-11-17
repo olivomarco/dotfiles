@@ -81,6 +81,7 @@ brew cask install krita
 mas install imovie
 brew cask install pixlr
 brew cask install wireshark
+brew install --cask powershell
 mas install 1352778147 # bitwarden
 mas install 1274495053 # microsoft-todo
 brew install --cask darktable
