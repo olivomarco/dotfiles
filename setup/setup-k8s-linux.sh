@@ -30,3 +30,7 @@ fi
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod 700 get_helm.sh
 ./get_helm.sh && rm ./get_helm.sh
+
+# Azure kubelogin
+wget https://github.com/Azure/kubelogin/releases/download/v0.0.22/kubelogin-linux-amd64.zip -O /tmp/kubelogin-linux-amd64.zip
+unzip /tmp/kubelogin-linux-amd64.zip && mv /tmp/bin/linux_amd64/kubelogin /usr/bin/kubelogin && rm -rf /tmp/bin && rm -rf /tmp/kubelogin*

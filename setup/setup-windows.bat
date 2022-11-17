@@ -29,5 +29,17 @@ echo install microsoft-specific packages with chocolatey...
 choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh
 choco install -y zoomit
 
+echo "install kubelogin"
+az aks install-cli
+$targetDir="$env:USERPROFILE\.azure-kubelogin"
+$oldPath = [System.Environment]::GetEnvironmentVariable("Path","User")
+$oldPathArray=($oldPath) -split ";"
+if(-Not($oldPathArray -Contains "$targetDir")) {
+    write-host "Permanently adding $targetDir to User Path"
+    $newPath = "$oldPath;$targetDir" -replace ";+", ";"
+    [System.Environment]::SetEnvironmentVariable("Path",$newPath,"User")
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","User"),[System.Environment]::GetEnvironmentVariable("Path","Machine") -join ";"
+}
+
 echo install windows linux subsystem
 wsl --install
