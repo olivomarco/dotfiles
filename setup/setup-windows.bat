@@ -23,7 +23,10 @@ choco install -y oraclejdk maven
 choco install -y nodejs
 choco install -y ngrok
 choco install -y screenpresso
-rem choco install -y eraser caffeine soundswitch
+choco install -y soundswitch
+choco install -y autohotkey
+choco install -y eraser
+rem choco install -y caffeine
 
 echo install microsoft-specific packages with chocolatey...
 choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh
