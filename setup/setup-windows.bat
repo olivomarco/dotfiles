@@ -10,9 +10,7 @@ echo install chocolatey from the internet...
 && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
 
 rem echo install packages with chocolatey...
-rem choco install -y cygwin cyg-get nmap wget curl virtualbox vagrant nodepadplusplus filezilla firefox ^
-rem paint.net putty winscp git vlc googlechrome javaruntime wireshark adobereader 7zip sysinternals openssh ^
-rem kubernetes-cli dbeaver greenshot eraser vscode caffeine
+rem choco install -y cygwin cyg-get nmap virtualbox vagrant nodepadplusplus putty javaruntime caffeine
 
 echo install generic packages with chocolatey...
 choco install -y nodepadplusplus firefox paint.net vlc googlechrome adobereader 7zip
@@ -32,7 +30,7 @@ echo install microsoft-specific packages with chocolatey...
 choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh
 choco install -y zoomit
 
-echo "install kubelogin"
+echo install kubelogin
 az aks install-cli
 $targetDir="$env:USERPROFILE\.azure-kubelogin"
 $oldPath = [System.Environment]::GetEnvironmentVariable("Path","User")
