@@ -45,6 +45,7 @@ brew install sops
 brew install gnupg
 brew install speedtest-cli
 brew install tree
+brew install jq
 brew install bitwarden-cli
 brew install bat
 brew install telnet
