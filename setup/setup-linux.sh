@@ -9,19 +9,42 @@ if [ $EUID -ne 0 ] ; then
    exit 1
 fi
 
+ARCHTYPE=amd64
+
 # install various packages
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
 apt-get install -y git wget curl vim lynx dnsutils bash-completion git-core \
     screen ntp jq htop psmisc netcat net-tools gnupg gnupg-agent nmap gzip mlocate rsync \
     sudo dos2unix unzip openssl software-properties-common apt-transport-https \
-    build-essential dkms tasksel console-data zsh snapd
+    build-essential dkms tasksel console-data zsh snapd exa
 snap install ngrok
 
 # install bat
 BAT_VERSION=0.18.0
-BAT_ARCHTYPE=amd64
-wget https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${BAT_ARCHTYPE}.deb \
-    -O /tmp/bat_${BAT_VERSION}_${BAT_ARCHTYPE}.deb && \
-dpkg -i /tmp/bat_${BAT_VERSION}_${BAT_ARCHTYPE}.deb && \
-rm /tmp/bat_${BAT_VERSION}_${BAT_ARCHTYPE}.deb
+wget https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${ARCHTYPE}.deb \
+    -O /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb
+
+# install duf
+DUF_VERSION=0.8.1
+wget https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${ARCHTYPE}.deb \
+    -O /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb
+
+# install fd
+apt-get install -y fd-find && ln -s $(which fdfind) ~/.local/bin/fd
+
+# install ripgrep
+RG_VERSION=13.0.0
+curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
+dpkg -i ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && rm ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
+
+# install delta
+DELTA_VERSION=0.16.5
+wget https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${ARCHTYPE}.deb \
+    -O /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb

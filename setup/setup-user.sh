@@ -51,6 +51,8 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   mv ~/history-sync ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/history-sync
   mkdir $HOME/.zsh_history_proj && cd $HOME/.zsh_history_proj && git init
 
+  pip3 install tldr
+
   sudo chsh -s $(which zsh) $(whoami)
 fi
 

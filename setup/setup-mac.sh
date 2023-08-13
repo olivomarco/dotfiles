@@ -90,6 +90,13 @@ brew install --cask darktable
 brew install --cask homebrew/cask-drivers/gutenprint
 brew install --cask logitech-camera-settings
 brew install --cask adobe-acrobat-reader
+brew install exa
+brew install ripgrep
+brew install fd
+brew install broot
+brew install duf
+brew install git-delta
+brew install tldr
 
 echo "installing docker on mac..."
 brew install docker docker-machine
