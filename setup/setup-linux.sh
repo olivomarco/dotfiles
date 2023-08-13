@@ -48,3 +48,6 @@ wget https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-
     -O /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
 dpkg -i /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
 rm /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb
+
+# install broot
+wget https://dystroy.org/broot/download/x86_64-linux/broot && mv broot /usr/local/bin
