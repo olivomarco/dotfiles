@@ -27,7 +27,7 @@ choco install -y eraser
 rem choco install -y caffeine
 
 echo install microsoft-specific packages with chocolatey...
-choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh
+choco install -y sysinternals vscode microsoftazurestorageexplorer azure-cli sql-server-management-studio dotnetcore-sdk powerbi visualstudio2019enterprise gh powershell-core
 choco install -y zoomit
 
 echo install kubelogin
