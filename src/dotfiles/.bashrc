@@ -136,3 +136,5 @@ set -o ignoreeof
 
 PS1='[\u@\h \W]\$'   
 export PS1
+
+[ -f  $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br

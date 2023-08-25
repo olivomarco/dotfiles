@@ -40,3 +40,5 @@ if [ "$PS1" ] ; then
 fi
 
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
+
+[ -f  $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br
