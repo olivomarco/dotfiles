@@ -127,7 +127,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -laF'
 alias x='exit'
-[ -x $(which batcat) ] && alias bat=batcat
+[[ -x $(which batcat) ]] && alias bat=batcat
 HISTSIZE=20000
 SAVEHIST=20000
 set -o ignoreeof
