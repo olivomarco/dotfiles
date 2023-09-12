@@ -35,7 +35,12 @@ dpkg -i /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb && \
 rm /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb
 
 # install fd
-apt-get install -y fd-find && ln -s $(which fdfind) ~/.local/bin/fd
+apt-get install -y fd-find
+if [ ! -z $SUDO_USER ] ; then
+	ln -s $(which fdfind) /home/${SUDO_USER}/.local/bin/fd
+else
+	ln -s $(which fdfind) /root/.local/bin/fd
+fi;
 
 # install ripgrep
 RG_VERSION=13.0.0
