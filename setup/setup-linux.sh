@@ -37,10 +37,12 @@ rm /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb
 # install fd
 apt-get install -y fd-find
 if [ ! -z $SUDO_USER ] ; then
-	ln -s $(which fdfind) /home/${SUDO_USER}/.local/bin/fd
+    p=/home/${SUDO_USER}/.local/bin
 else
-	ln -s $(which fdfind) /root/.local/bin/fd
+    p=/root/.local/bin
 fi;
+[ ! -e $p ] && mkdir -p $p
+ln -s $(which fdfind) $p/.local/bin/fd
 
 # install ripgrep
 RG_VERSION=13.0.0

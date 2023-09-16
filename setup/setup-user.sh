@@ -74,5 +74,8 @@ if [ "${machine}" == "mac" ] ; then
   cp src/Library/Preferences/* ${HOME}/Library/Preferences/
 fi
 
+p=${HOME}/.local/bin
+[ ! -e $p ] && mkdir -p $p
+
 echo "NOTE: remember to manually copy your ssh-keys into ${HOME}/.ssh folder, and gpg-keys to ${HOME}/.gnupg"
 echo "done."
