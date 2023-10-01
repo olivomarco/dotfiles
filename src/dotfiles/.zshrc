@@ -9,7 +9,7 @@ case "${unameOut}" in
 esac
 
 # If you come from bash you might have to change your $PATH.
-PATH=$HOME/bin:$HOME/.local/bin:$HOME/.autojump/bin:/snap/bin:$PATH
+PATH=$HOME/bin:$HOME/.local/bin:$HOME/.autojump/bin:/snap/bin:$HOME/go/bin:$PATH
 [[ "${machine}" == "mac" ]] && PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/:$PATH
 export PATH
 
