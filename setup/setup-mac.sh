@@ -51,6 +51,7 @@ brew install bat
 brew install telnet
 brew install md5sha1sum
 brew install Azure/kubelogin/kubelogin
+brew install jless
 
 echo "installing more global software via cask/mas..."
 brew tap caskroom/cask
