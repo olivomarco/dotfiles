@@ -20,6 +20,10 @@ apt-get install -y git wget curl vim lynx dnsutils bash-completion git-core \
     build-essential dkms tasksel console-data zsh snapd exa ncal
 snap install ngrok
 
+# install brew
+test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
+test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # install bat
 BAT_VERSION=0.18.0
 wget https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${ARCHTYPE}.deb \
