@@ -34,7 +34,7 @@
       # =========================[ Line #1 ]=========================
       context                 # user@hostname
       ssh
-      #os_icon               # os identifier
+      os_icon               # os identifier
       dir                     # current directory
       vcs                     # git status
       # =========================[ Line #2 ]=========================
