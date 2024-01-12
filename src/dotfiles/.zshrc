@@ -145,6 +145,10 @@ source $HOME/.oh-my-zsh/custom/plugins/az-completion
 #[[ $TERM != "xterm-256color" ]] && [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
 [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
 
+# The next lines enables shell command completion for az-cli.
+if [ -f /opt/homebrew/etc/bash_completion.d/az ] ; then source /opt/homebrew/etc/bash_completion.d/az ; fi
+if [ -f /usr/local/etc/bash_completion.d/az ] ; then source /usr/local/etc/bash_completion.d/az ; fi
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f ~/google-cloud-sdk/path.zsh.inc ]; then . ~/google-cloud-sdk/path.zsh.inc; fi
 
