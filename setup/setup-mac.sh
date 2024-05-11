@@ -87,7 +87,7 @@ brew cask install wireshark
 brew install --cask powershell
 mas install 1352778147 # bitwarden
 mas install 1274495053 # microsoft-todo
-brew install --cask darktable
+brew install pinta
 brew install --cask homebrew/cask-drivers/gutenprint
 brew install --cask logitech-camera-settings
 brew install --cask adobe-acrobat-reader
