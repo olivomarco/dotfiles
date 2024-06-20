@@ -24,6 +24,7 @@ choco install -y screenpresso
 choco install -y soundswitch
 choco install -y autohotkey
 choco install -y eraser
+choco install -y bruno
 rem choco install -y caffeine
 
 echo install microsoft-specific packages with chocolatey...
