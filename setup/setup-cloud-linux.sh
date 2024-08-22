@@ -17,6 +17,9 @@ cp gh_${VERSION}_linux_amd64/bin/gh /usr/local/bin/
 cp -r gh_${VERSION}_linux_amd64/share/man/man1/* /usr/share/man/man1/
 rm -rf gh_${VERSION}_linux_amd64*
 
+# add gh extensions
+gh extension install https://github.com/nektos/gh-act
+
 # install az-cli
 curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
 echo "deb [arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list
