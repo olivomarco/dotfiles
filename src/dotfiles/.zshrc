@@ -125,8 +125,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ll='ls -laF'
-alias ll='eza -laF'
+#alias ll='ls -laF'
+alias ll='eza -laF automatic'
 alias ls='eza'
 alias x='exit'
 [[ -x $(which batcat) ]] && alias bat=batcat
