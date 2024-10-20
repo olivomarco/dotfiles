@@ -17,7 +17,7 @@ apt-get update
 apt-get install -y git wget curl vim lynx dnsutils bash-completion git-core \
     screen ntp jq htop psmisc net-tools netcat-openbsd gnupg gnupg-agent nmap gzip mlocate rsync \
     sudo dos2unix unzip openssl software-properties-common apt-transport-https \
-    build-essential dkms tasksel console-data zsh snapd exa ncal
+    build-essential dkms tasksel console-data zsh snapd eza ncal
 snap install ngrok
 
 # install brew

@@ -91,7 +91,7 @@ brew install pinta
 brew install --cask homebrew/cask-drivers/gutenprint
 brew install --cask logitech-camera-settings
 brew install --cask adobe-acrobat-reader
-brew install exa
+brew install eza
 brew install ripgrep
 brew install fd
 brew install broot
