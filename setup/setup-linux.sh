@@ -17,8 +17,16 @@ apt-get update
 apt-get install -y git wget curl vim lynx dnsutils bash-completion git-core \
     screen ntp jq htop psmisc net-tools netcat-openbsd gnupg gnupg-agent nmap gzip mlocate rsync \
     sudo dos2unix unzip openssl software-properties-common apt-transport-https \
-    build-essential dkms tasksel console-data zsh snapd eza ncal
+    build-essential dkms tasksel console-data zsh snapd ncal gpg
 snap install ngrok
+
+# install eza
+sudo mkdir -p /etc/apt/keyrings
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
+sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+sudo apt update
+sudo apt install -y eza
 
 # install brew
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
