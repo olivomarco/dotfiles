@@ -126,6 +126,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -laF'
+alias ll='eza -laF'
+alias ls='eza'
 alias x='exit'
 [[ -x $(which batcat) ]] && alias bat=batcat
 HISTSIZE=20000
