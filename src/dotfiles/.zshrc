@@ -13,6 +13,8 @@ PATH=$HOME/bin:$HOME/.local/bin:$HOME/.autojump/bin:/snap/bin:$HOME/go/bin:$HOME
 [[ "${machine}" == "mac" ]] && PATH=/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/:$PATH
 export PATH
 
+export DOTNET_ROOT=/usr/share/dotnet
+
 # set custom vars
 export GOHOME=$HOME/go
 export EDITOR=vim
