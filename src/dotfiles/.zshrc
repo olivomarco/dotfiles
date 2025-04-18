@@ -170,3 +170,5 @@ if command -v ngrok &>/dev/null; then
 fi
 
 export JAVA_HOME=/usr/lib/jvm/default-java
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
