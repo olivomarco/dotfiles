@@ -86,5 +86,8 @@ eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 # install tools
 brew install fd
 
+# install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+
 echo "NOTE: remember to manually copy your ssh-keys into ${HOME}/.ssh folder, and gpg-keys to ${HOME}/.gnupg"
 echo "done."
