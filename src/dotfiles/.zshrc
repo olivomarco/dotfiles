@@ -171,4 +171,4 @@ fi
 
 export JAVA_HOME=/usr/lib/jvm/default-java
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+[ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
