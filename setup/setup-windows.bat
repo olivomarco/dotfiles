@@ -30,6 +30,7 @@ choco install -y autohotkey
 choco install -y eraser
 choco install -y bruno
 choco install -y docker-desktop
+choco install -y uv
 rem choco install -y caffeine
 
 echo install microsoft-specific packages with chocolatey...
