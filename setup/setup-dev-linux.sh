@@ -15,6 +15,9 @@ dpkg -i packages-microsoft-prod.deb
 rm packages-microsoft-prod.deb
 apt-get update; apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-9.0 aspnetcore-runtime-9.0
 
+# install azd
+curl -fsSL https://aka.ms/install-azd.sh | bash
+
 # install java stuff
 apt-get install -y default-jdk maven
 
