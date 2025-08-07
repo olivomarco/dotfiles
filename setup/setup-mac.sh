@@ -86,7 +86,6 @@ brew cask install pixlr
 brew cask install wireshark
 brew install --cask powershell
 mas install 1352778147 # bitwarden
-mas install 1274495053 # microsoft-todo
 brew install pinta
 brew install --cask homebrew/cask-drivers/gutenprint
 brew install --cask logitech-camera-settings
@@ -101,8 +100,8 @@ brew install tldr
 
 echo "installing docker on mac..."
 brew install docker docker-machine
-brew cask install virtualbox
-docker-machine create --driver virtualbox default
+#brew cask install virtualbox
+#docker-machine create --driver virtualbox default
 
 echo "adding zsh to /etc/shells..."
 echo /usr/local/bin/zsh | sudo tee -a /etc/shells
