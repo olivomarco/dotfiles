@@ -13,7 +13,7 @@ rem choco install -y virtualbox vagrant
 
 echo install generic packages with chocolatey...
 choco install -y firefox paint.net vlc googlechrome adobereader 7zip
-choco install -y winscp filezilla
+choco install -y winscp
 rem choco install -y wireshark
 choco install -y wget curl git openssh dbeaver kubernetes-cli
 choco install -y oraclejdk maven
