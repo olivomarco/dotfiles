@@ -181,3 +181,6 @@ export NVM_DIR="$HOME/.nvm"
 # VSCode shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
+# Load Angular CLI autocompletion.
+ng && source <(ng completion script)
+>>>>>>> 7a3428c (Fixing)
