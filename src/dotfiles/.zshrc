@@ -183,4 +183,3 @@ export NVM_DIR="$HOME/.nvm"
 
 # Load Angular CLI autocompletion.
 ng && source <(ng completion script)
->>>>>>> 7a3428c (Fixing)
