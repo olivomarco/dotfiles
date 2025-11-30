@@ -41,8 +41,6 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
 
   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
 
-  pip3 install thefuck
-
   zsh -c 'git clone https://github.com/wting/autojump.git ~/autojump && cd ~/autojump && ./install.py && cd .. && rm -rf ~/autojump'
   mkdir -p ~/.oh-my-zsh/completions
   chmod -R 755 ~/.oh-my-zsh/completions
