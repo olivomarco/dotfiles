@@ -180,3 +180,7 @@ export NVM_DIR="$HOME/.nvm"
 
 # VSCode shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+if [[ -f ".venv/bin/activate" ]]; then
+  source .venv/bin/activate
+fi

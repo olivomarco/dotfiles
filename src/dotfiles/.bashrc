@@ -144,3 +144,8 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:/opt/homebrew/bin
 
 [ -f  $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br
+
+if [ -f ".venv/bin/activate" ]; then
+  source .venv/bin/activate
+fi
+
