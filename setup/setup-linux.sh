@@ -14,19 +14,18 @@ ARCHTYPE=amd64
 # install various packages
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y git wget curl vim lynx dnsutils bash-completion git-core \
-    screen ntp jq yq htop psmisc net-tools netcat-openbsd gnupg gnupg-agent nmap gzip mlocate rsync \
-    sudo dos2unix unzip openssl software-properties-common apt-transport-https \
-    build-essential dkms tasksel console-data zsh snapd ncal gpg tree
-snap install ngrok
+apt-get install -y git wget curl vim lynx dnsutils bash-completion \
+    screen ntpsec jq yq htop psmisc net-tools netcat-openbsd gnupg gnupg-agent nmap gzip plocate rsync \
+    sudo dos2unix unzip openssl apt-transport-https \
+    build-essential dkms tasksel zsh ncal gpg tree
 
 # install eza
-sudo mkdir -p /etc/apt/keyrings
-wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | sudo gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | sudo tee /etc/apt/sources.list.d/gierens.list
-sudo chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-sudo apt update
-sudo apt install -y eza
+mkdir -p /etc/apt/keyrings
+wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | tee /etc/apt/sources.list.d/gierens.list
+chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+apt-get update
+apt-get install -y eza
 
 # install brew
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
@@ -55,12 +54,14 @@ else
     p=/root/.local/bin
 fi;
 [ ! -e $p ] && mkdir -p $p
-ln -s $(which fdfind) $p/.local/bin/fd
+ln -sf $(which fdfind) $p/fd
 
 # install ripgrep
 RG_VERSION=13.0.0
-curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
-dpkg -i ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && rm ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
+wget https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb \
+    -O /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
 
 # install delta
 DELTA_VERSION=0.16.5
