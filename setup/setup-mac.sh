@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "$(uname -s)" != "DARWIN" ] ; then
+if [ "$(uname -s | tr '[:upper:]' '[:lower:]')" != "darwin" ]; then
     echo "current machine is not mac."
     exit 1
 fi
@@ -20,7 +20,11 @@ echo "update existing software"
 sudo softwareupdate -i -a
 
 echo "installing homebrew..."
-sudo /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo >> $HOME/.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> $HOME/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 echo "installing global packages..."
 brew install zsh
@@ -37,7 +41,7 @@ brew install w3m
 brew install iterm2
 brew install htop
 brew install mas
-brew install transmission
+#brew install transmission
 brew install python3
 brew install kubectx
 brew install watch
@@ -50,45 +54,32 @@ brew install bitwarden-cli
 brew install bat
 brew install telnet
 brew install md5sha1sum
-brew install Azure/kubelogin/kubelogin
 brew install jless
 
 echo "installing more global software via cask/mas..."
-brew tap caskroom/cask
-brew install caskroom/cask/brew-cask
-brew cask install firefox
-brew cask install google-chrome
-brew cask install authy
-brew cask install caffeine
-brew cask install dbeaver-community
-brew cask install dropbox
-brew cask install handbrake
-brew cask install iterm2
-brew cask install microsoft-word
-brew cask install microsoft-excel
-brew cask install microsoft-powerpoint
-brew cask install onedrive
-brew cask install onyx
-brew cask install openoffice
-mas install microsoft-remote-desktop-10
-brew cask install skype
-brew cask install slack
-mas install stuffit-expander-16
-brew cask install tunnelblick
-brew cask install veracrypt
-brew cask install visual-studio-code
-brew cask install vlc
-mas install whatsize
-brew cask install virtualbox
-brew cask install krita
+brew install firefox
+brew install google-chrome
+mas install 937984704 # amphetamine app
+brew install dbeaver-community
+brew install dropbox
+brew install handbrake
+brew install microsoft-word
+brew install microsoft-excel
+brew install microsoft-powerpoint
+#brew install onedrive
+brew install glances
+brew install onyx
+brew install slack
+#brew install tunnelblick
+#brew install veracrypt
+brew install visual-studio-code
+brew install vlc
 mas install imovie
-brew cask install pixlr
-brew cask install wireshark
-brew install --cask powershell
+#brew install wireshark
+#brew install --cask powershell
 mas install 1352778147 # bitwarden
 brew install pinta
-brew install --cask homebrew/cask-drivers/gutenprint
-brew install --cask logitech-camera-settings
+brew install gimp
 brew install --cask adobe-acrobat-reader
 brew install eza
 brew install ripgrep
@@ -97,10 +88,11 @@ brew install broot
 brew install duf
 brew install git-delta
 brew install tldr
+brew install karabiner-elements
 
-echo "installing docker on mac..."
-brew install docker docker-machine
-#brew cask install virtualbox
+#echo "installing docker on mac..."
+#brew install --cask virtualbox
+#brew install docker docker-machine
 #docker-machine create --driver virtualbox default
 
 echo "adding zsh to /etc/shells..."

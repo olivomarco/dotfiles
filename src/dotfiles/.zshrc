@@ -181,6 +181,12 @@ export NVM_DIR="$HOME/.nvm"
 # VSCode shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
+# define a command to open vscode using devcontainer (works if current folder contains a .devcontainer)
+devcode() {
+  folder=$(pwd)
+  code --folder-uri "vscode-remote://dev-container+${folder//\//%2F}"
+}
+
 if [[ -f ".venv/bin/activate" ]]; then
   source .venv/bin/activate
 fi

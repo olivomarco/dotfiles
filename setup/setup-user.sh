@@ -18,7 +18,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/.."
 echo "doing setup for user ${USER}..."
 
 echo "creating bin, .ssh and .gnupg folders..."
-mkdir ${HOME}/bin || true
+mkdir ${HOME}/.local/bin || true
 mkdir ${HOME}/.ssh || true
 mkdir ${HOME}/.gnupg || true
 
@@ -56,7 +56,7 @@ fi
 
 echo "symlink/copy files..."
 for i in ${DIR}/src/bin/* ; do
-  ln -sf ${i} ${HOME}/bin/$(basename $i)
+  ln -sf ${i} ${HOME}/.local/bin/$(basename $i)
 done
 for i in $(find ${DIR}/src/dotfiles -maxdepth 1 -not -type d) ; do
   ln -sf ${i} ${HOME}/$(basename $i)
@@ -65,15 +65,11 @@ done
 [[ "${machine}" != "mac" ]] && ln -sf ${DIR}/src/.ssh/config.linux ${HOME}/.ssh/config
 [[ ! -e ${HOME}/.ssh/authorized_keys ]] && cp ${DIR}/src/.ssh/authorized_keys ${HOME}/.ssh/authorized_keys
 [[ ! -e ${HOME}/.ssh/known_hosts ]] && cp ${DIR}/src/.ssh/known_hosts ${HOME}/.ssh/known_hosts
-[[ "${machine}" == "mac" ]] && ln -sf /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport $HOME/bin/airport
 
 if [ "${machine}" == "mac" ] ; then
   echo "copying Library/Preferences..."
   cp src/Library/Preferences/* ${HOME}/Library/Preferences/
 fi
-
-p=${HOME}/.local/bin
-[ ! -e $p ] && mkdir -p $p
 
 # install homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
