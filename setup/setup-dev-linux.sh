@@ -9,11 +9,12 @@ if [ $EUID -ne 0 ] ; then
    exit 1
 fi
 
-# install dotnet sdk
-wget https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-apt-get update; apt-get install -y apt-transport-https && apt-get update && apt-get install -y dotnet-sdk-9.0 aspnetcore-runtime-9.0
+# install dotnet sdk (via install script — avoids broken Microsoft apt repo on Trixie)
+wget https://dot.net/v1/dotnet-install.sh -O /tmp/dotnet-install.sh
+chmod +x /tmp/dotnet-install.sh
+/tmp/dotnet-install.sh --channel 9.0 --install-dir /usr/share/dotnet
+ln -sf /usr/share/dotnet/dotnet /usr/local/bin/dotnet
+rm /tmp/dotnet-install.sh
 
 # install azd
 curl -fsSL https://aka.ms/install-azd.sh | bash
