@@ -29,7 +29,7 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   echo "installing and configuring zsh stuff..."
   [ "${machine}" == "mac" ] && git clone https://github.com/ryanoasis/nerd-fonts --depth 1 ~/nerd-fonts && ~/nerd-fonts/install.sh && rm -rf ~/nerd-fonts
 
-  curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+  RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
   git clone https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
 
@@ -49,7 +49,7 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   mv ~/history-sync ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/history-sync
   mkdir $HOME/.zsh_history_proj && cd $HOME/.zsh_history_proj && git init
 
-  pip3 install tldr
+  #pip3 install tldr
 
   sudo chsh -s $(which zsh) $(whoami)
 fi
