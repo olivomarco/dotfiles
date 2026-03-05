@@ -39,7 +39,7 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
 
   wget https://raw.githubusercontent.com/Azure/azure-cli/dev/az.completion -O ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/az-completion
 
-  git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
+  #git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install --key-bindings --completion --no-update-rc
 
   zsh -c 'git clone https://github.com/wting/autojump.git ~/autojump && cd ~/autojump && ./install.py && cd .. && rm -rf ~/autojump'
   mkdir -p ~/.oh-my-zsh/completions

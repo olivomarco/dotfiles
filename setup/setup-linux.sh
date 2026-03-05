@@ -19,13 +19,13 @@ apt-get install -y git wget curl vim lynx dnsutils bash-completion \
     sudo dos2unix unzip openssl apt-transport-https \
     build-essential dkms tasksel zsh ncal gpg tree
 
-# install eza
-mkdir -p /etc/apt/keyrings
-wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
-echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | tee /etc/apt/sources.list.d/gierens.list
-chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
-apt-get update
-apt-get install -y eza
+# # install eza
+# mkdir -p /etc/apt/keyrings
+# wget -qO- https://raw.githubusercontent.com/eza-community/eza/main/deb.asc | gpg --dearmor -o /etc/apt/keyrings/gierens.gpg
+# echo "deb [signed-by=/etc/apt/keyrings/gierens.gpg] http://deb.gierens.de stable main" | tee /etc/apt/sources.list.d/gierens.list
+# chmod 644 /etc/apt/keyrings/gierens.gpg /etc/apt/sources.list.d/gierens.list
+# apt-get update
+# apt-get install -y eza
 
 # install brew
 test -d ~/.linuxbrew && eval "$(~/.linuxbrew/bin/brew shellenv)"
@@ -70,5 +70,5 @@ wget https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-
 dpkg -i /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
 rm /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb
 
-# install broot
-wget https://dystroy.org/broot/download/x86_64-linux/broot && mv broot /usr/local/bin && chmod +x /usr/local/bin/broot
+# # install broot
+# wget https://dystroy.org/broot/download/x86_64-linux/broot && mv broot /usr/local/bin && chmod +x /usr/local/bin/broot
