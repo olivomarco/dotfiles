@@ -33,6 +33,7 @@ brew install ffmpeg
 brew install perl
 brew install sqlite3
 brew install wget
+brew install git-lfs
 brew install gzip
 brew install lynx
 brew install mysql-client
