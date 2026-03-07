@@ -97,9 +97,9 @@ history
 kube-ps1
 kubectl
 docker
-history-sync
 )
 
+ZSH_DISABLE_COMPFIX=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -128,10 +128,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -laF'
-#alias ll='eza -laF auto'
-#alias ls='eza'
 alias x='exit'
-[[ -x $(which batcat) ]] && alias bat=batcat
+(( $+commands[batcat] )) && alias bat=batcat
 HISTSIZE=20000
 SAVEHIST=20000
 set -o ignoreeof
@@ -140,7 +138,6 @@ GPG_TTY=$(tty); export GPG_TTY
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -x thefuck ] && eval $(thefuck --alias)
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
-autoload -U compinit && compinit -u
 
 source $HOME/.oh-my-zsh/custom/plugins/az-completion
 
@@ -149,34 +146,39 @@ source $HOME/.oh-my-zsh/custom/plugins/az-completion
 #[[ $TERM != "xterm-256color" ]] && [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
 [[ -f ~/.p10k-minimal.zsh ]] && source ~/.p10k-minimal.zsh
 
-# The next lines enables shell command completion for az-cli.
-if [ -f /opt/homebrew/etc/bash_completion.d/az ] ; then source /opt/homebrew/etc/bash_completion.d/az ; fi
-if [ -f /usr/local/etc/bash_completion.d/az ] ; then source /usr/local/etc/bash_completion.d/az ; fi
+## The next lines enables shell command completion for az-cli.
+#if [ -f /opt/homebrew/etc/bash_completion.d/az ] ; then source /opt/homebrew/etc/bash_completion.d/az ; fi
+#if [ -f /usr/local/etc/bash_completion.d/az ] ; then source /usr/local/etc/bash_completion.d/az ; fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f ~/google-cloud-sdk/path.zsh.inc ]; then . ~/google-cloud-sdk/path.zsh.inc; fi
+## The next line updates PATH for the Google Cloud SDK.
+#if [ -f ~/google-cloud-sdk/path.zsh.inc ]; then . ~/google-cloud-sdk/path.zsh.inc; fi
 
-# The next line enables shell command completion for gcloud.
-if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then . ~/google-cloud-sdk/completion.zsh.inc; fi
+## The next line enables shell command completion for gcloud.
+#if [ -f ~/google-cloud-sdk/completion.zsh.inc ]; then . ~/google-cloud-sdk/completion.zsh.inc; fi
 
+# nvm — lazy-loaded for fast shell startup
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+_load_nvm() {
+  unfunction nvm node npm npx 2>/dev/null
+  if [ -s "/opt/homebrew/opt/nvm/nvm.sh" ]; then
+    . "/opt/homebrew/opt/nvm/nvm.sh"
+    [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && . "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+  elif [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+  fi
+}
+nvm()  { _load_nvm; nvm "$@"; }
+node() { _load_nvm; node "$@"; }
+npm()  { _load_nvm; npm "$@"; }
+npx()  { _load_nvm; npx "$@"; }
 
+# broot
 [ -f  $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br
-
-if command -v ngrok &>/dev/null; then
-	eval "$(ngrok completion)"
-fi
 
 export JAVA_HOME=/usr/lib/jvm/default-java
 
 [ -f /home/linuxbrew/.linuxbrew/bin/brew ] && eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # VSCode shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
@@ -187,6 +189,6 @@ devcode() {
   code --folder-uri "vscode-remote://dev-container+${folder//\//%2F}"
 }
 
-if [[ -f ".venv/bin/activate" ]]; then
-  source .venv/bin/activate
-fi
+#if [[ -f ".venv/bin/activate" ]]; then
+#  source .venv/bin/activate
+#fi

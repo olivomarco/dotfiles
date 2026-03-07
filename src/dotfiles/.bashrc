@@ -145,7 +145,7 @@ export PATH=/opt/homebrew/bin:$PATH
 
 [ -f  $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br
 
-if [ -f ".venv/bin/activate" ]; then
-  source .venv/bin/activate
-fi
+#if [ -f ".venv/bin/activate" ]; then
+#  source .venv/bin/activate
+#fi
 
