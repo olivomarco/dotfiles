@@ -132,7 +132,7 @@ alias x='exit'
 (( $+commands[batcat] )) && alias bat=batcat
 HISTSIZE=20000
 SAVEHIST=20000
-set -o ignoreeof
+#set -o ignoreeof
 GPG_TTY=$(tty); export GPG_TTY
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

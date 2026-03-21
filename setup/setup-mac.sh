@@ -28,6 +28,7 @@ eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 echo "installing global packages..."
 brew install zsh
+brew install handy
 brew install ImageMagick
 brew install ffmpeg
 brew install perl
