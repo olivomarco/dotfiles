@@ -7,10 +7,6 @@ cls
 echo install chocolatey from the internet...
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
-echo install packages with chocolatey...
-rem choco install -y cygwin cyg-get putty
-rem choco install -y virtualbox vagrant
-
 echo install generic packages with chocolatey...
 choco install -y firefox paint.net vlc googlechrome adobereader 7zip
 choco install -y winscp
@@ -29,9 +25,8 @@ choco install -y uv
 rem choco install -y caffeine
 
 echo install microsoft-specific packages with chocolatey...
-choco install -y sysinternals vscode azure-cli dotnetcore-sdk powerbi visualstudio2022enterprise gh powershell-core dotnet-9.0-sdk
+choco install -y vscode azure-cli dotnetcore-sdk powerbi visualstudio2022enterprise gh powershell-core dotnet-10.0-sdk
 rem choco install -y microsoftazurestorageexplorer sql-server-management-studio
-rem choco install -y zoomit
 choco install -y powertoys
 
 echo install kubelogin
