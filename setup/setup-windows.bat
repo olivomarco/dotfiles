@@ -15,7 +15,8 @@ choco install -y wget curl git openssh dbeaver kubernetes-cli
 choco install -y oraclejdk maven
 choco install -y nodejs
 rem choco install -y ngrok nmap
-choco install -y sharex
+rem choco install -y sharex
+choco install -y screenpresso
 rem choco install -y soundswitch
 choco install -y autohotkey
 choco install -y eraser
