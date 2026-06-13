@@ -82,7 +82,8 @@ mas install imovie
 mas install 1352778147 # bitwarden
 brew install pinta
 brew install gimp
-brew install --cask adobe-acrobat-reader
+#brew install --cask adobe-acrobat-reader
+mas install 6469021132 # PDFgear
 brew install eza
 brew install ripgrep
 brew install fd

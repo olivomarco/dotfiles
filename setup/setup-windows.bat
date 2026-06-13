@@ -8,7 +8,8 @@ echo install chocolatey from the internet...
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
 
 echo install generic packages with chocolatey...
-choco install -y firefox paint.net vlc googlechrome adobereader 7zip
+choco install -y firefox paint.net vlc googlechrome 7zip
+choco install -y pdfgear
 choco install -y winscp
 rem choco install -y wireshark
 choco install -y wget curl git openssh dbeaver kubernetes-cli
