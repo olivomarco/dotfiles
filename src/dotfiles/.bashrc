@@ -72,7 +72,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -137,8 +137,40 @@ shopt -s cdspell
 shopt -s hostcomplete
 set -o ignoreeof
 
-PS1='[\u@\h \W]\$'   
-export PS1
+# --- prompt: single-line, colored, git-aware -------------------------------
+# print " (branch)" when inside a git repo, nothing otherwise.
+# prefer git's own __git_ps1 (richer) if it has been sourced, else fall back
+# to a fast, non-blocking lookup so non-git directories aren't slowed down.
+__bash_git_branch() {
+    if declare -F __git_ps1 >/dev/null 2>&1; then
+        __git_ps1 ' (%s)'
+        return
+    fi
+    local branch
+    branch=$(git symbolic-ref --short -q HEAD 2>/dev/null) \
+        || branch=$(git rev-parse --short HEAD 2>/dev/null) \
+        || return
+    printf ' (%s)' "$branch"
+}
+
+# rebuild PS1 before each prompt so the prompt char reflects the last exit code:
+# green '$' on success, red '$' after a failed command.
+__bash_set_prompt() {
+    local ec=$?
+    if [ "$color_prompt" = yes ]; then
+        local c_uh='\[\e[01;32m\]'      # user@host  -> bold green
+        local c_dir='\[\e[01;34m\]'     # directory  -> bold blue
+        local c_git='\[\e[00;33m\]'     # git branch -> yellow
+        local c_reset='\[\e[00m\]'
+        local c_char='\[\e[01;32m\]'    # prompt char -> green by default
+        [ "$ec" -ne 0 ] && c_char='\[\e[01;31m\]'  # red after failure
+        PS1="${c_uh}\u@\h${c_reset} ${c_dir}\w${c_reset}${c_git}$(__bash_git_branch)${c_reset} ${c_char}\$${c_reset} "
+    else
+        PS1="\u@\h \w$(__bash_git_branch) \$ "
+    fi
+}
+PROMPT_COMMAND=__bash_set_prompt
+# ---------------------------------------------------------------------------
 
 # nvm
 export NVM_DIR="$HOME/.nvm"
