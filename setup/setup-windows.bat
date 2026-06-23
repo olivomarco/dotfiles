@@ -30,6 +30,9 @@ choco install -y vscode azure-cli dotnetcore-sdk powerbi visualstudio2022enterpr
 rem choco install -y microsoftazurestorageexplorer sql-server-management-studio
 choco install -y powertoys
 
+echo install GitHub Copilot CLI...
+winget install --silent --accept-package-agreements --accept-source-agreements GitHub.Copilot
+
 echo install kubelogin
 az aks install-cli
 $targetDir="$env:USERPROFILE\.azure-kubelogin"

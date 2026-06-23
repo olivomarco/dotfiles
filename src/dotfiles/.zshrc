@@ -129,6 +129,8 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -laF'
 alias x='exit'
+# always launch GitHub Copilot CLI with all permissions enabled
+alias copilot='copilot --yolo'
 (( $+commands[batcat] )) && alias bat=batcat
 HISTSIZE=20000
 SAVEHIST=20000

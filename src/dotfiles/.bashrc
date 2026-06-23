@@ -105,6 +105,9 @@ alias ll='ls -laF'
 #alias la='ls -A'
 #alias l='ls -CF'
 
+# always launch GitHub Copilot CLI with all permissions enabled
+alias copilot='copilot --yolo'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.

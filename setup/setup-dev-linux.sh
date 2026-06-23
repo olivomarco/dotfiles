@@ -24,3 +24,6 @@ apt-get install -y default-jdk maven
 
 # install nodejs and python
 apt-get install -y python3 python3-pip python3-venv nodejs python-is-python3
+
+# install GitHub Copilot CLI (requires Node.js 22+)
+npm install -g @github/copilot

@@ -92,6 +92,7 @@ brew install duf
 brew install git-delta
 brew install tldr
 brew install karabiner-elements
+brew install copilot-cli
 
 #echo "installing docker on mac..."
 #brew install --cask virtualbox
