@@ -66,6 +66,14 @@ done
 [[ ! -e ${HOME}/.ssh/authorized_keys ]] && cp ${DIR}/src/.ssh/authorized_keys ${HOME}/.ssh/authorized_keys
 [[ ! -e ${HOME}/.ssh/known_hosts ]] && cp ${DIR}/src/.ssh/known_hosts ${HOME}/.ssh/known_hosts
 
+# create machine-specific override files (untracked, live only in $HOME).
+# put local/experimental tweaks here so the dotfiles repo stays clean while
+# the tracked files remain reserved for changes you intend to commit & share.
+echo "creating local override files (if missing)..."
+[[ ! -e ${HOME}/.zshrc.local ]] && printf '# local zsh overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > ${HOME}/.zshrc.local
+[[ ! -e ${HOME}/.bashrc.local ]] && printf '# local bash overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > ${HOME}/.bashrc.local
+[[ ! -e ${HOME}/.gitconfig.local ]] && printf '# local/private git config for %s (not tracked in the dotfiles repo)\n# e.g.\n# [user]\n#\tname = Your Name\n#\temail = you@example.com\n' "$(hostname)" > ${HOME}/.gitconfig.local
+
 if [ "${machine}" == "mac" ] ; then
   echo "copying Library/Preferences..."
   cp src/Library/Preferences/* ${HOME}/Library/Preferences/

@@ -21,3 +21,8 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+# machine-specific / private git settings (untracked; keeps the repo clean).
+# put per-machine config such as [user] name/email here instead of editing this
+# file. a missing file is silently ignored. included last so it overrides above.
+[include]
+	path = ~/.gitconfig.local

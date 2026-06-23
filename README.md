@@ -74,3 +74,22 @@ For case 2 instead, things could be more complicated: you may want to add more [
 These two steps are the steps I have made several times and I tend to repeat them over time when finding a new utility or reading about a new fantastic command that does wonders and that I totally want on my shells.
 
 **IMPORTANT NOTE: if you think your tools or configurations are very useful and could be beneficial to multiple people, please open a pull request so that I can evaluate to incorporate them in the main branch.**
+
+## Machine-specific changes vs. shareable changes (local overrides)
+
+Because [setup-user.sh](/setup/setup-user.sh) **symlinks** the dotfiles straight into the cloned repo, any edit you make to a live config file (e.g. `~/.zshrc`) instantly shows up as a change in the repo's `git status`. That's great when you want to commit a genuine improvement, but it gets noisy for quick, machine-specific or experimental tweaks that you never intend to share.
+
+To keep the repo clean while still being able to commit real changes, each shell/git config sources an **untracked, machine-local override file** that lives only in your `$HOME` and is never part of the repo:
+
+| Tracked file | Local override (untracked) |
+|---|---|
+| `~/.zshrc` | `~/.zshrc.local` |
+| `~/.bashrc` | `~/.bashrc.local` |
+| `~/.gitconfig` | `~/.gitconfig.local` |
+
+`setup-user.sh` creates these `*.local` files for you (only if they don't already exist). The override is loaded **last**, so it can override anything from the tracked file. `~/.gitconfig.local` is the natural place for per-machine/private git settings such as your `[user]` name and email.
+
+Rule of thumb:
+
+* **Machine-specific, private, or experimental** → put it in the matching `*.local` file. The repo stays clean.
+* **A deliberate improvement you want everywhere** → edit the tracked file directly. It shows up as a diff, and you commit it (and ideally open a PR).

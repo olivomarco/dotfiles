@@ -194,3 +194,8 @@ devcode() {
 #if [[ -f ".venv/bin/activate" ]]; then
 #  source .venv/bin/activate
 #fi
+
+# machine-specific overrides (untracked; keeps the repo clean). put any local
+# or experimental tweaks here instead of editing this file, so `git status`
+# stays clean. sourced last so it can override anything above.
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
