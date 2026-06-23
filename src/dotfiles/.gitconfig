@@ -1,7 +1,5 @@
 [credential]
 	helper = store
-[http]
-	sslVerify = false
 [pull]
 	rebase = true
 [core]

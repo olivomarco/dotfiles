@@ -138,7 +138,6 @@ SAVEHIST=20000
 GPG_TTY=$(tty); export GPG_TTY
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -x thefuck ] && eval $(thefuck --alias)
 [[ -s $HOME/.autojump/etc/profile.d/autojump.sh ]] && source $HOME/.autojump/etc/profile.d/autojump.sh
 
 source $HOME/.oh-my-zsh/custom/plugins/az-completion

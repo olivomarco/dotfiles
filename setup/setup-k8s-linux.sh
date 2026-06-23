@@ -31,6 +31,7 @@ chmod 700 get_helm.sh
 ./get_helm.sh && rm ./get_helm.sh
 
 # Azure kubelogin
-KUBELOGIN_VERSION=0.1.6
+KUBELOGIN_VERSION=$(curl -s "https://api.github.com/repos/Azure/kubelogin/releases/latest" \
+    | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/' | cut -c2-)
 wget https://github.com/Azure/kubelogin/releases/download/v${KUBELOGIN_VERSION}/kubelogin-linux-amd64.zip -O /tmp/kubelogin-linux-amd64.zip
 unzip -o -d /tmp /tmp/kubelogin-linux-amd64.zip && mv /tmp/bin/linux_amd64/kubelogin /usr/local/bin/kubelogin && rm -rf /tmp/bin && rm -rf /tmp/kubelogin*

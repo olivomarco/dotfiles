@@ -18,12 +18,12 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )/.."
 echo "doing setup for user ${USER}..."
 
 echo "creating bin, .ssh and .gnupg folders..."
-mkdir ${HOME}/.local/bin || true
-mkdir ${HOME}/.ssh || true
-mkdir ${HOME}/.gnupg || true
+mkdir -p "${HOME}/.local/bin"
+mkdir -p "${HOME}/.ssh"
+mkdir -p "${HOME}/.gnupg"
 
 echo "changing permissions..."
-chmod 700 ${HOME}/.ssh
+chmod 700 "${HOME}/.ssh"
 
 if [ ! -d ${HOME}/.oh-my-zsh ] ; then
   echo "installing and configuring zsh stuff..."
@@ -55,39 +55,36 @@ if [ ! -d ${HOME}/.oh-my-zsh ] ; then
 fi
 
 echo "symlink/copy files..."
-for i in ${DIR}/src/bin/* ; do
-  ln -sf ${i} ${HOME}/.local/bin/$(basename $i)
+for i in "${DIR}"/src/bin/* ; do
+  ln -sf "${i}" "${HOME}/.local/bin/$(basename "$i")"
 done
-for i in $(find ${DIR}/src/dotfiles -maxdepth 1 -not -type d) ; do
-  ln -sf ${i} ${HOME}/$(basename $i)
+for i in $(find "${DIR}/src/dotfiles" -maxdepth 1 -not -type d) ; do
+  ln -sf "${i}" "${HOME}/$(basename "$i")"
 done
-[[ "${machine}" == "mac" ]] && ln -sf ${DIR}/src/.ssh/config.mac ${HOME}/.ssh/config
-[[ "${machine}" != "mac" ]] && ln -sf ${DIR}/src/.ssh/config.linux ${HOME}/.ssh/config
-[[ ! -e ${HOME}/.ssh/authorized_keys ]] && cp ${DIR}/src/.ssh/authorized_keys ${HOME}/.ssh/authorized_keys
-[[ ! -e ${HOME}/.ssh/known_hosts ]] && cp ${DIR}/src/.ssh/known_hosts ${HOME}/.ssh/known_hosts
+[[ "${machine}" == "mac" ]] && ln -sf "${DIR}/src/.ssh/config.mac" "${HOME}/.ssh/config"
+[[ "${machine}" != "mac" ]] && ln -sf "${DIR}/src/.ssh/config.linux" "${HOME}/.ssh/config"
+[[ ! -e "${HOME}/.ssh/authorized_keys" ]] && cp "${DIR}/src/.ssh/authorized_keys" "${HOME}/.ssh/authorized_keys"
+[[ ! -e "${HOME}/.ssh/known_hosts" ]] && cp "${DIR}/src/.ssh/known_hosts" "${HOME}/.ssh/known_hosts"
 
 # create machine-specific override files (untracked, live only in $HOME).
 # put local/experimental tweaks here so the dotfiles repo stays clean while
 # the tracked files remain reserved for changes you intend to commit & share.
 echo "creating local override files (if missing)..."
-[[ ! -e ${HOME}/.zshrc.local ]] && printf '# local zsh overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > ${HOME}/.zshrc.local
-[[ ! -e ${HOME}/.bashrc.local ]] && printf '# local bash overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > ${HOME}/.bashrc.local
-[[ ! -e ${HOME}/.gitconfig.local ]] && printf '# local/private git config for %s (not tracked in the dotfiles repo)\n# e.g.\n# [user]\n#\tname = Your Name\n#\temail = you@example.com\n' "$(hostname)" > ${HOME}/.gitconfig.local
+[[ ! -e "${HOME}/.zshrc.local" ]] && printf '# local zsh overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > "${HOME}/.zshrc.local"
+[[ ! -e "${HOME}/.bashrc.local" ]] && printf '# local bash overrides for %s (not tracked in the dotfiles repo)\n' "$(hostname)" > "${HOME}/.bashrc.local"
+[[ ! -e "${HOME}/.gitconfig.local" ]] && printf '# local/private git config for %s (not tracked in the dotfiles repo)\n# e.g.\n# [user]\n#\tname = Your Name\n#\temail = you@example.com\n' "$(hostname)" > "${HOME}/.gitconfig.local"
 
 if [ "${machine}" == "mac" ] ; then
   echo "copying Library/Preferences..."
-  cp src/Library/Preferences/* ${HOME}/Library/Preferences/
+  cp src/Library/Preferences/* "${HOME}/Library/Preferences/"
+
+  # install homebrew and brew-managed tools (mac only; on Linux these come from
+  # the apt-based setup-linux.sh, so installing Homebrew here is redundant)
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+  brew install fd
+  brew install nvm
 fi
-
-# install homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# install tools
-brew install fd
-
-# install nvm
-brew install nvm
 
 echo "NOTE: remember to manually copy your ssh-keys into ${HOME}/.ssh folder, and gpg-keys to ${HOME}/.gnupg"
 echo "done."

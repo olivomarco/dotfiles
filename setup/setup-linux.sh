@@ -11,6 +11,12 @@ fi
 
 ARCHTYPE=amd64
 
+# resolve the latest release tag for a GitHub repo (raw tag, e.g. "v1.2.3" or "1.2.3")
+latest_release() {
+    curl -s "https://api.github.com/repos/$1/releases/latest" \
+        | grep '"tag_name"' | sed -E 's/.*"([^"]+)".*/\1/'
+}
+
 # install various packages
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
@@ -33,18 +39,18 @@ test -d /home/linuxbrew/.linuxbrew && eval "$(/home/linuxbrew/.linuxbrew/bin/bre
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 # install bat
-BAT_VERSION=0.18.0
+BAT_VERSION=$(latest_release sharkdp/bat); BAT_VERSION=${BAT_VERSION#v}
 wget https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_${ARCHTYPE}.deb \
     -O /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb && \
 dpkg -i /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb && \
 rm /tmp/bat_${BAT_VERSION}_${ARCHTYPE}.deb
 
 # install duf
-DUF_VERSION=0.8.1
+DUF_VERSION=$(latest_release muesli/duf); DUF_VERSION=${DUF_VERSION#v}
 wget https://github.com/muesli/duf/releases/download/v${DUF_VERSION}/duf_${DUF_VERSION}_linux_${ARCHTYPE}.deb \
-    -O /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb && \
-dpkg -i /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb && \
-rm /tmp/bat_${DUF_VERSION}_${ARCHTYPE}.deb
+    -O /tmp/duf_${DUF_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/duf_${DUF_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/duf_${DUF_VERSION}_${ARCHTYPE}.deb
 
 # install fd
 apt-get install -y fd-find
@@ -57,18 +63,18 @@ fi;
 ln -sf $(which fdfind) $p/fd
 
 # install ripgrep
-RG_VERSION=13.0.0
+RG_VERSION=$(latest_release BurntSushi/ripgrep); RG_VERSION=${RG_VERSION#v}
 wget https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb \
     -O /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && \
 dpkg -i /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb && \
 rm /tmp/ripgrep_${RG_VERSION}_${ARCHTYPE}.deb
 
 # install delta
-DELTA_VERSION=0.16.5
+DELTA_VERSION=$(latest_release dandavison/delta); DELTA_VERSION=${DELTA_VERSION#v}
 wget https://github.com/dandavison/delta/releases/download/${DELTA_VERSION}/git-delta_${DELTA_VERSION}_${ARCHTYPE}.deb \
-    -O /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
-dpkg -i /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb && \
-rm /tmp/bat_${DELTA_VERSION}_${ARCHTYPE}.deb
+    -O /tmp/git-delta_${DELTA_VERSION}_${ARCHTYPE}.deb && \
+dpkg -i /tmp/git-delta_${DELTA_VERSION}_${ARCHTYPE}.deb && \
+rm /tmp/git-delta_${DELTA_VERSION}_${ARCHTYPE}.deb
 
 # # install broot
 # wget https://dystroy.org/broot/download/x86_64-linux/broot && mv broot /usr/local/bin && chmod +x /usr/local/bin/broot
