@@ -126,6 +126,8 @@ $localProfile = Join-Path $profileDir "Microsoft.PowerShell_profile.local.ps1"
 if (-not (Test-Path $localProfile)) {
     "# local PowerShell overrides for $env:COMPUTERNAME (not tracked in the dotfiles repo)" |
         Out-File -FilePath $localProfile -Encoding utf8
+}
+
 Write-Host "Configure CLI tool paths..."
 
 $pathsToAdd = @(
