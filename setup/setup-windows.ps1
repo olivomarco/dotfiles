@@ -91,5 +91,28 @@ foreach ($path in $pathsToAdd) {
     Add-UserPath $path
 }
 
+Write-Host "create .ssh folder and copy ssh files..."
+if ($PSScriptRoot) {
+    $repoRoot = Split-Path $PSScriptRoot -Parent
+} else {
+    $repoRoot = (Get-Location).Path
+}
+$sshSource = Join-Path $repoRoot "src\.ssh"
+$sshTarget = Join-Path $env:USERPROFILE ".ssh"
+
+if (-not (Test-Path $sshTarget)) {
+    New-Item -ItemType Directory -Path $sshTarget | Out-Null
+}
+
+Copy-Item -Path (Join-Path $sshSource "config.windows") -Destination (Join-Path $sshTarget "config") -Force
+
+foreach ($sshFile in @("authorized_keys", "known_hosts")) {
+    $sourceFile = Join-Path $sshSource $sshFile
+    $targetFile = Join-Path $sshTarget $sshFile
+    if ((Test-Path $sourceFile) -and (-not (Test-Path $targetFile))) {
+        Copy-Item -Path $sourceFile -Destination $targetFile -Force
+    }
+}
+
 Write-Host "install windows linux subsystem"
 wsl --install
