@@ -2,6 +2,40 @@
 # Run from an elevated PowerShell prompt:
 #   powershell -ExecutionPolicy Bypass -File .\setup\setup-windows.ps1
 
+function Add-UserPath {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$PathToAdd
+    )
+
+    $expandedPath = [Environment]::ExpandEnvironmentVariables($PathToAdd)
+
+    if (-not (Test-Path $expandedPath)) {
+        Write-Host "Skipping missing path: $expandedPath"
+        return
+    }
+
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    $pathItems = @($userPath -split ";" | Where-Object { $_ -and $_.Trim() })
+
+    $alreadyExists = $pathItems | Where-Object {
+        $_.TrimEnd("\") -ieq $expandedPath.TrimEnd("\")
+    }
+
+    if (-not $alreadyExists) {
+        Write-Host "Adding to User PATH: $expandedPath"
+        $newPath = ($pathItems + $expandedPath) -join ";"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    } else {
+        Write-Host "Already in User PATH: $expandedPath"
+    }
+
+    $env:Path = @(
+        [Environment]::GetEnvironmentVariable("Path", "Machine")
+        [Environment]::GetEnvironmentVariable("Path", "User")
+    ) -join ";"
+}
+
 Write-Host "install chocolatey from the internet..."
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -43,6 +77,18 @@ if (-Not ($oldPathArray -Contains "$targetDir")) {
     $newPath = "$oldPath;$targetDir" -replace ";+", ";"
     [System.Environment]::SetEnvironmentVariable("Path", $newPath, "User")
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "User"), [System.Environment]::GetEnvironmentVariable("Path", "Machine") -join ";"
+}
+
+Write-Host "Configure CLI tool paths..."
+
+$pathsToAdd = @(
+    "$env:APPDATA\Python\Python314\Scripts",
+    "C:\Python314",
+    "C:\Python314\Scripts",
+    "$env:USERPROFILE\.azure-kubelogin"
+)
+foreach ($path in $pathsToAdd) {
+    Add-UserPath $path
 }
 
 Write-Host "install windows linux subsystem"
