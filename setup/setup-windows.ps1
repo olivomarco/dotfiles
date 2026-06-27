@@ -179,7 +179,15 @@ if (-not (Test-Path $sshTarget)) {
     New-Item -ItemType Directory -Path $sshTarget | Out-Null
 }
 
-Copy-Item -Path (Join-Path $sshSource "config.windows") -Destination (Join-Path $sshTarget "config") -Force
+# only write the ssh config if it doesn't already exist, so re-running setup
+# never clobbers a user's personal ~/.ssh/config (host aliases, identities,
+# etc.). Same non-destructive policy as authorized_keys / known_hosts below.
+$sshConfigTarget = Join-Path $sshTarget "config"
+if (-not (Test-Path $sshConfigTarget)) {
+    Copy-Item -Path (Join-Path $sshSource "config.windows") -Destination $sshConfigTarget
+} else {
+    Write-Host "  ~/.ssh/config already exists, leaving it untouched"
+}
 
 foreach ($sshFile in @("authorized_keys", "known_hosts")) {
     $sourceFile = Join-Path $sshSource $sshFile
