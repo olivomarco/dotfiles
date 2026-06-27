@@ -10,13 +10,15 @@
 # environment
 # ---------------------------------------------------------------------------
 $env:EDITOR = 'vim'
-# add common user tool paths (created by various installers) to PATH if present
+# add common ~/-relative tool dirs to PATH for this session (mirrors the
+# PATH= line in .zshrc). System tool installs that non-pwsh apps also need
+# (Python, kubelogin) are instead written to the *persistent* User PATH by
+# setup-windows.ps1, so they are intentionally not repeated here.
 $userPaths = @(
     "$HOME\bin",
     "$HOME\.local\bin",
     "$HOME\go\bin",
-    "$HOME\.dotnet\tools",
-    "$HOME\.azure-kubelogin"
+    "$HOME\.dotnet\tools"
 )
 foreach ($p in $userPaths) {
     if ((Test-Path $p) -and ($env:Path -notlike "*$p*")) {

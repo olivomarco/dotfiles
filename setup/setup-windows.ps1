@@ -130,11 +130,14 @@ if (-not (Test-Path $localProfile)) {
 
 Write-Host "Configure CLI tool paths..."
 
+# persistent User PATH for tools that callers outside pwsh also need (Python,
+# GUI apps, cmd, VS Code tasks). ~/.azure-kubelogin is added persistently by the
+# "install kubelogin" block above, so it is not repeated here; ~/-relative shell
+# convenience dirs live in the PowerShell profile instead.
 $pathsToAdd = @(
     "$env:APPDATA\Python\Python314\Scripts",
     "C:\Python314",
-    "C:\Python314\Scripts",
-    "$env:USERPROFILE\.azure-kubelogin"
+    "C:\Python314\Scripts"
 )
 foreach ($path in $pathsToAdd) {
     Add-UserPath $path
