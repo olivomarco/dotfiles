@@ -2,6 +2,40 @@
 # Run from an elevated PowerShell prompt:
 #   powershell -ExecutionPolicy Bypass -File .\setup\setup-windows.ps1
 
+function Add-UserPath {
+    param(
+        [Parameter(Mandatory = $true)]
+        [string]$PathToAdd
+    )
+
+    $expandedPath = [Environment]::ExpandEnvironmentVariables($PathToAdd)
+
+    if (-not (Test-Path $expandedPath)) {
+        Write-Host "Skipping missing path: $expandedPath"
+        return
+    }
+
+    $userPath = [Environment]::GetEnvironmentVariable("Path", "User")
+    $pathItems = @($userPath -split ";" | Where-Object { $_ -and $_.Trim() })
+
+    $alreadyExists = $pathItems | Where-Object {
+        $_.TrimEnd("\") -ieq $expandedPath.TrimEnd("\")
+    }
+
+    if (-not $alreadyExists) {
+        Write-Host "Adding to User PATH: $expandedPath"
+        $newPath = ($pathItems + $expandedPath) -join ";"
+        [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+    } else {
+        Write-Host "Already in User PATH: $expandedPath"
+    }
+
+    $env:Path = @(
+        [Environment]::GetEnvironmentVariable("Path", "Machine")
+        [Environment]::GetEnvironmentVariable("Path", "User")
+    ) -join ";"
+}
+
 Write-Host "install chocolatey from the internet..."
 Set-ExecutionPolicy Bypass -Scope Process -Force
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
@@ -92,6 +126,39 @@ $localProfile = Join-Path $profileDir "Microsoft.PowerShell_profile.local.ps1"
 if (-not (Test-Path $localProfile)) {
     "# local PowerShell overrides for $env:COMPUTERNAME (not tracked in the dotfiles repo)" |
         Out-File -FilePath $localProfile -Encoding utf8
+Write-Host "Configure CLI tool paths..."
+
+$pathsToAdd = @(
+    "$env:APPDATA\Python\Python314\Scripts",
+    "C:\Python314",
+    "C:\Python314\Scripts",
+    "$env:USERPROFILE\.azure-kubelogin"
+)
+foreach ($path in $pathsToAdd) {
+    Add-UserPath $path
+}
+
+Write-Host "create .ssh folder and copy ssh files..."
+if ($PSScriptRoot) {
+    $repoRoot = Split-Path $PSScriptRoot -Parent
+} else {
+    $repoRoot = (Get-Location).Path
+}
+$sshSource = Join-Path $repoRoot "src\.ssh"
+$sshTarget = Join-Path $env:USERPROFILE ".ssh"
+
+if (-not (Test-Path $sshTarget)) {
+    New-Item -ItemType Directory -Path $sshTarget | Out-Null
+}
+
+Copy-Item -Path (Join-Path $sshSource "config.windows") -Destination (Join-Path $sshTarget "config") -Force
+
+foreach ($sshFile in @("authorized_keys", "known_hosts")) {
+    $sourceFile = Join-Path $sshSource $sshFile
+    $targetFile = Join-Path $sshTarget $sshFile
+    if ((Test-Path $sourceFile) -and (-not (Test-Path $targetFile))) {
+        Copy-Item -Path $sourceFile -Destination $targetFile -Force
+    }
 }
 
 Write-Host "install windows linux subsystem"
