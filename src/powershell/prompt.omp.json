@@ -1,0 +1,121 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "version": 2,
+  "final_space": true,
+  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "transient_prompt": {
+    "background": "transparent",
+    "foreground": "#5fd700",
+    "template": "\u276f "
+  },
+  "palette": {
+    "os": "#cad3f5",
+    "path": "#0087af",
+    "path-anchor": "#00afff",
+    "git-clean": "#5fd700",
+    "git-dirty": "#d75f5f",
+    "ok": "#5fd700",
+    "error": "#ff0000",
+    "muted": "#6c6c6c",
+    "k8s": "#326ce5",
+    "azure": "#008ad7"
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "foreground": "p:os",
+          "template": "{{ if .WSL }}WSL at {{ end }}{{ .Icon }} "
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "p:path",
+          "properties": {
+            "style": "agnoster_short",
+            "max_depth": 3,
+            "folder_separator_icon": "/",
+            "folder_icon": "\u2026"
+          },
+          "template": "<b>{{ .Path }}</b> "
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "p:git-clean",
+          "foreground_templates": [
+            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:git-dirty{{ end }}"
+          ],
+          "properties": {
+            "fetch_status": true,
+            "fetch_upstream_icon": true,
+            "branch_max_length": 25
+          },
+          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "overflow": "hidden",
+      "segments": [
+        {
+          "type": "status",
+          "style": "plain",
+          "foreground": "p:ok",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:error{{ end }}"
+          ],
+          "properties": { "always_enabled": false },
+          "template": " \u2718 {{ .Code }}"
+        },
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "p:muted",
+          "properties": {
+            "threshold": 2000,
+            "style": "round"
+          },
+          "template": " {{ .FormattedMs }}"
+        },
+        {
+          "type": "kubectl",
+          "style": "plain",
+          "foreground": "p:k8s",
+          "properties": {
+            "context_aliases": {}
+          },
+          "template": " \u2388 {{ .Context }}{{ if .Namespace }}/{{ .Namespace }}{{ end }}"
+        },
+        {
+          "type": "az",
+          "style": "plain",
+          "foreground": "p:azure",
+          "template": " \ufd03 {{ .Name }}"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground": "p:ok",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:error{{ end }}"
+          ],
+          "template": "\u276f"
+        }
+      ]
+    }
+  ]
+}

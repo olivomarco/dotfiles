@@ -26,6 +26,7 @@ Have fun!
     │   └── Preferences <= Mac Library/Preferences folder and subfolders
     ├── bin <= these files are copied to $HOME/bin folder
     └── dotfiles <= contains files starting with a dot (.), typical of a shell
+    └── powershell <= PowerShell 7 profile + Oh My Posh theme (the Windows shell)
 ```
 
 The repo is made in a way so that the majority of configuration files is kept in the repo and therefore, when adding something new to your main branch, you can just run a `git pull` command in your target shell in order to incorporate the changes.
@@ -58,7 +59,29 @@ For this reason, the following scripts are provided:
 * [setup-dev-linux.sh](/setup/setup-dev-linux.sh), which setups dev-related tools
 * [setup-cloud-linux.sh](/setup/setup-cloud-linux.sh), which setups cloud cli tools
 * [setup-mac.sh](/setup/setup-mac.sh), which installs several tools and programs on a Mac, and makes several configurations I use
-* [setup-windows.ps1](/setup/setup-windows.ps1), a PowerShell script that installs several utilities on Windows
+* [setup-windows.ps1](/setup/setup-windows.ps1), a PowerShell script that installs several utilities on Windows **and sets up a fully-featured PowerShell 7 shell** (see below)
+
+### The PowerShell shell on Windows (the zsh equivalent)
+
+On Linux/Mac the fancy shell is built on [zsh](https://www.zsh.org/) + [oh-my-zsh](https://ohmyz.sh/) + [powerlevel10k](https://github.com/romkatv/powerlevel10k). On Windows the same experience is reproduced for **PowerShell 7** using [Oh My Posh](https://ohmyposh.dev/) (the prompt engine, equivalent to powerlevel10k) together with [PSReadLine](https://learn.microsoft.com/powershell/module/psreadline/) and a curated set of modules that fill the role of the oh-my-zsh plugins:
+
+| oh-my-zsh / zsh feature | PowerShell equivalent |
+|---|---|
+| powerlevel10k theme | Oh My Posh + [`src/powershell/prompt.omp.json`](/src/powershell/prompt.omp.json) |
+| zsh-syntax-highlighting / zsh-autosuggestions / history | PSReadLine (prediction + 20k persistent history) |
+| git plugin | posh-git + Oh My Posh git segment |
+| kube-ps1 / kubecontext, docker, kubectl | Oh My Posh `kubectl`/`az` segments, DockerCompletion, kubectl completion |
+| fzf | PSFzf (Ctrl+R history, Ctrl+T files) |
+| autojump | [zoxide](https://github.com/ajeetdsouza/zoxide) (`z <dir>`) |
+| nvm | [fnm](https://github.com/Schniz/fnm) |
+| Terminal-Icons (ls icons) | Terminal-Icons module |
+| aliases `ll` / `x` / `copilot` / `bat` | ported in the profile |
+
+The shell config lives in [`src/powershell/Microsoft.PowerShell_profile.ps1`](/src/powershell/Microsoft.PowerShell_profile.ps1) (the `.zshrc` counterpart). `setup-windows.ps1` installs everything and **symlinks** the profile into `$PROFILE` and the theme into `$HOME`, so a `git pull` propagates changes to any Windows box — exactly like the zsh setup. Run it from an **elevated** PowerShell prompt:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\setup\setup-windows.ps1
+```
 
 ## Add your own customization
 
@@ -86,6 +109,7 @@ To keep the repo clean while still being able to commit real changes, each shell
 | `~/.zshrc` | `~/.zshrc.local` |
 | `~/.bashrc` | `~/.bashrc.local` |
 | `~/.gitconfig` | `~/.gitconfig.local` |
+| `$PROFILE` (PowerShell) | `Microsoft.PowerShell_profile.local.ps1` |
 
 `setup-user.sh` creates these `*.local` files for you (only if they don't already exist). The override is loaded **last**, so it can override anything from the tracked file. `~/.gitconfig.local` is the natural place for per-machine/private git settings such as your `[user]` name and email.
 
