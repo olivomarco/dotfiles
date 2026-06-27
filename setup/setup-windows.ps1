@@ -94,10 +94,33 @@ Write-Host "install PowerShell modules (the oh-my-zsh plugin equivalents)..."
 # posh-git: git completion (git plugin)        Terminal-Icons: ls icons
 # PSFzf: fzf plugin                              DockerCompletion: docker plugin
 # Az.Tools.Predictor: az completion
-Install-Module -Name PSReadLine          -Scope CurrentUser -Force -AllowPrerelease -SkipPublisherCheck
-foreach ($m in @('posh-git','Terminal-Icons','PSFzf','DockerCompletion','Az.Tools.Predictor')) {
-    Write-Host "  installing module $m..."
-    Install-Module -Name $m -Scope CurrentUser -Force -Repository PSGallery
+#
+# Run the installs *inside pwsh* (PowerShell 7), not the Windows PowerShell 5.1
+# host this script may be launched from. Two reasons:
+#  1) 5.1's in-box PowerShellGet v1 lacks -AllowPrerelease/-SkipPublisherCheck.
+#  2) modules installed by 5.1 go to Documents\WindowsPowerShell\Modules, but the
+#     profile runs in pwsh which only searches Documents\PowerShell\Modules.
+$pwshExe = (Get-Command pwsh -ErrorAction SilentlyContinue).Source
+if (-not $pwshExe) { $pwshExe = "$env:ProgramFiles\PowerShell\7\pwsh.exe" }
+
+& $pwshExe -NoProfile -Command {
+    # make sure the NuGet provider + a trusted PSGallery are available so the
+    # installs run unattended
+    if (-not (Get-PackageProvider -Name NuGet -ErrorAction SilentlyContinue)) {
+        Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Scope CurrentUser | Out-Null
+    }
+    if ((Get-PSRepository -Name PSGallery).InstallationPolicy -ne 'Trusted') {
+        Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    }
+
+    # PSReadLine ships in-box and is Microsoft-signed, so updating it needs
+    # -SkipPublisherCheck (valid in PowerShellGet v2 shipped with pwsh 7).
+    Install-Module -Name PSReadLine -Scope CurrentUser -Force -SkipPublisherCheck
+
+    foreach ($m in @('posh-git','Terminal-Icons','PSFzf','DockerCompletion','Az.Accounts','Az.Tools.Predictor')) {
+        Write-Host "  installing module $m..."
+        Install-Module -Name $m -Scope CurrentUser -Force -Repository PSGallery
+    }
 }
 
 Write-Host "install extra CLI tools used by the profile (zoxide=autojump, fnm=nvm, fzf, bat)..."
