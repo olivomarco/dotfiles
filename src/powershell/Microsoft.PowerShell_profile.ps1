@@ -36,10 +36,16 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
     Set-PSReadLineOption -HistoryNoDuplicates
     Set-PSReadLineOption -MaximumHistoryCount 20000          # HISTSIZE/SAVEHIST=20000
     Set-PSReadLineOption -HistorySearchCursorMovesToEnd
-    # inline ghost-text suggestions from history + predictors (autosuggestions)
-    Set-PSReadLineOption -PredictionSource HistoryAndPlugin
-    Set-PSReadLineOption -PredictionViewStyle ListView
-    Set-PSReadLineOption -Colors @{ InlinePrediction = 'DarkGray' }
+    # inline ghost-text suggestions from history + predictors (autosuggestions).
+    # Prediction needs a real VT-capable terminal; swallow the error on
+    # redirected/non-interactive hosts (e.g. when a script dot-sources this).
+    try {
+        Set-PSReadLineOption -PredictionSource HistoryAndPlugin -ErrorAction Stop
+        Set-PSReadLineOption -PredictionViewStyle ListView -ErrorAction Stop
+        Set-PSReadLineOption -Colors @{ InlinePrediction = 'DarkGray' }
+    } catch {
+        # non-interactive / no virtual terminal — prediction unavailable, ignore
+    }
     # arrow keys search history by what's already typed (like zsh history-substring)
     Set-PSReadLineKeyHandler -Key UpArrow   -Function HistorySearchBackward
     Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
@@ -103,13 +109,14 @@ if (Get-Command bat -ErrorAction SilentlyContinue) {
 # ---------------------------------------------------------------------------
 if (Get-Command oh-my-posh -ErrorAction SilentlyContinue) {
     $theme = "$HOME\prompt.omp.json"
+    # The transient prompt (collapsing past prompts to a minimal symbol) is
+    # driven by the "transient_prompt" block in the theme JSON and wired up by
+    # `oh-my-posh init` automatically — no separate enable call is needed.
     if (Test-Path $theme) {
         oh-my-posh init pwsh --config $theme | Invoke-Expression
     } else {
         oh-my-posh init pwsh | Invoke-Expression
     }
-    # transient prompt: collapse past prompts to a minimal symbol for clean scrollback
-    Enable-PoshTransientPrompt
 }
 
 # ---------------------------------------------------------------------------
