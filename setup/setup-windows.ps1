@@ -50,7 +50,7 @@ choco install -y wget curl git openssh dbeaver kubernetes-cli
 choco install -y oraclejdk maven
 choco install -y nodejs
 # choco install -y ngrok nmap
-choco install -y sharex
+choco install -y greenshot
 # choco install -y soundswitch
 choco install -y autohotkey
 choco install -y eraser
