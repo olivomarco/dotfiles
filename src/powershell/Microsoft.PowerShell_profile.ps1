@@ -54,54 +54,92 @@ if (Get-Module -ListAvailable -Name PSReadLine) {
 }
 
 # ---------------------------------------------------------------------------
-# plugin-equivalent modules (imported only if installed)
+# plugin-equivalent modules (lazy-loaded to keep shell startup fast)
 # ---------------------------------------------------------------------------
-# posh-git => git plugin (branch/status in prompt is handled by Oh My Posh,
-# but posh-git still gives rich `git` tab-completion)
-if (Get-Module -ListAvailable -Name posh-git)       { Import-Module posh-git }
-# Terminal-Icons => file-type icons in Get-ChildItem / ls
-if (Get-Module -ListAvailable -Name Terminal-Icons) { Import-Module Terminal-Icons }
-# Az.Tools.Predictor => az completion / suggestions
-if (Get-Module -ListAvailable -Name Az.Tools.Predictor) { Import-Module Az.Tools.Predictor }
-# DockerCompletion => docker plugin completions
-if (Get-Module -ListAvailable -Name DockerCompletion) { Import-Module DockerCompletion }
-
-# PSFzf => fzf plugin (Ctrl+R history, Ctrl+T files)
-if ((Get-Module -ListAvailable -Name PSFzf) -and (Get-Command fzf -ErrorAction SilentlyContinue)) {
-    Import-Module PSFzf
-    Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+function Import-OptionalModuleOnce {
+    param([Parameter(Mandatory)][string]$Name)
+    if (-not (Get-Module -Name $Name)) {
+        Import-Module $Name -ErrorAction SilentlyContinue
+    }
 }
+
+# posh-git => git plugin. Oh My Posh already renders git status, so posh-git is
+# loaded only on the first git command to enable its completions/helpers later.
+function git {
+    Remove-Item Function:\git -ErrorAction SilentlyContinue
+    Import-OptionalModuleOnce posh-git
+    & git @args
+}
+
+# Terminal-Icons => file-type icons in Get-ChildItem / ll, loaded on first use.
+function Enable-TerminalIcons { Import-OptionalModuleOnce Terminal-Icons }
+
+# Az.Tools.Predictor is intentionally not imported at startup; it adds noticeable
+# latency to new shell sessions.
+
+# DockerCompletion => docker plugin completions, loaded on first docker command.
+function docker {
+    Remove-Item Function:\docker -ErrorAction SilentlyContinue
+    Import-OptionalModuleOnce DockerCompletion
+    & docker @args
+}
+
+# PSFzf => fzf plugin (Ctrl+R history, Ctrl+T files). Run Enable-PsFzf once in a
+# session to rebind the chords if needed.
+function Enable-PsFzf {
+    if (Get-Command fzf -ErrorAction SilentlyContinue) {
+        Import-OptionalModuleOnce PSFzf
+        if (Get-Module -Name PSFzf) {
+            Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' -PSReadlineChordReverseHistory 'Ctrl+r'
+        }
+    }
+}
+Enable-PsFzf
 
 # ---------------------------------------------------------------------------
 # external tool integrations
 # ---------------------------------------------------------------------------
-# zoxide => autojump replacement (`z <dir>` smart jumping)
-if (Get-Command zoxide -ErrorAction SilentlyContinue) {
-    Invoke-Expression (& { (zoxide init powershell --cmd z | Out-String) })
+# zoxide => autojump replacement (`z <dir>` smart jumping), loaded on first use.
+function z {
+    Remove-Item Function:\z -ErrorAction SilentlyContinue
+    if (Get-Command zoxide -ErrorAction SilentlyContinue) {
+        Invoke-Expression (& { (zoxide init powershell --cmd z | Out-String) })
+        z @args
+    }
 }
 
-# fnm => nvm replacement (fast Node version manager). Only init if installed.
-if (Get-Command fnm -ErrorAction SilentlyContinue) {
-    fnm env --use-on-cd | Out-String | Invoke-Expression
+# fnm => nvm replacement. Like the zsh profile's nvm setup, initialize it only
+# when Node tooling is used.
+function Initialize-Fnm {
+    Remove-Item Function:\fnm,Function:\node,Function:\npm,Function:\npx -ErrorAction SilentlyContinue
+    if (Get-Command fnm -CommandType Application -ErrorAction SilentlyContinue) {
+        fnm env --use-on-cd | Out-String | Invoke-Expression
+    }
 }
+function fnm  { Initialize-Fnm; & fnm @args }
+function node { Initialize-Fnm; & node @args }
+function npm  { Initialize-Fnm; & npm @args }
+function npx  { Initialize-Fnm; & npx @args }
 
-# kubectl completion (kubectl plugin)
-if (Get-Command kubectl -ErrorAction SilentlyContinue) {
-    kubectl completion powershell | Out-String | Invoke-Expression
-}
+# kubectl completion is intentionally not generated at startup; generating the
+# completion script adds noticeable latency to new shell sessions.
 
 # ---------------------------------------------------------------------------
 # aliases & functions (ported from .zshrc)
 # ---------------------------------------------------------------------------
 # ll => detailed listing. Terminal-Icons makes this colorful with icons.
-function ll { Get-ChildItem -Force @args }
+function ll { Enable-TerminalIcons; Get-ChildItem -Force @args }
 # x => exit
 function x  { exit }
 # always launch GitHub Copilot CLI with all permissions enabled
 function copilot { copilot.exe --yolo @args }
 # prefer bat over Get-Content for viewing files, if installed
-if (Get-Command bat -ErrorAction SilentlyContinue) {
-    function cat { bat @args }
+function cat {
+    if (Get-Command bat -ErrorAction SilentlyContinue) {
+        bat @args
+    } else {
+        Get-Content @args
+    }
 }
 
 # ---------------------------------------------------------------------------
