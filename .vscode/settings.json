@@ -1,4 +1,5 @@
 {
+    "terminal.integrated.fontFamily": "'MesloLGM Nerd Font', 'CaskaydiaCove Nerd Font', 'Cascadia Mono', Consolas, monospace",
     "workbench.colorCustomizations": {
         "activityBar.background": "#464F0E",
         "titleBar.activeBackground": "#626F13",

@@ -6,7 +6,7 @@
   "transient_prompt": {
     "background": "transparent",
     "foreground": "#5fd700",
-    "template": "\u276f "
+    "template": "> "
   },
   "palette": {
     "os": "#cad3f5",
@@ -29,7 +29,7 @@
           "type": "os",
           "style": "plain",
           "foreground": "p:os",
-          "template": "{{ if .WSL }}WSL at {{ end }}{{ .Icon }} "
+          "template": "{{ if .WSL }}wsl {{ else }}pwsh {{ end }}"
         },
         {
           "type": "path",
@@ -39,7 +39,7 @@
             "style": "agnoster_short",
             "max_depth": 3,
             "folder_separator_icon": "/",
-            "folder_icon": "\u2026"
+            "folder_icon": "..."
           },
           "template": "<b>{{ .Path }}</b> "
         },
@@ -47,15 +47,13 @@
           "type": "git",
           "style": "plain",
           "foreground": "p:git-clean",
-          "foreground_templates": [
-            "{{ if or (.Working.Changed) (.Staging.Changed) }}p:git-dirty{{ end }}"
-          ],
           "properties": {
-            "fetch_status": true,
-            "fetch_upstream_icon": true,
+            "fetch_status": false,
+            "fetch_upstream_icon": false,
+            "branch_icon": "",
             "branch_max_length": 25
           },
-          "template": "{{ .UpstreamIcon }}{{ .HEAD }}{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}"
+          "template": "{{ .HEAD }}"
         }
       ]
     },
@@ -72,7 +70,7 @@
             "{{ if gt .Code 0 }}p:error{{ end }}"
           ],
           "properties": { "always_enabled": false },
-          "template": " \u2718 {{ .Code }}"
+          "template": " x {{ .Code }}"
         },
         {
           "type": "executiontime",
@@ -83,21 +81,6 @@
             "style": "round"
           },
           "template": " {{ .FormattedMs }}"
-        },
-        {
-          "type": "kubectl",
-          "style": "plain",
-          "foreground": "p:k8s",
-          "properties": {
-            "context_aliases": {}
-          },
-          "template": " \u2388 {{ .Context }}{{ if .Namespace }}/{{ .Namespace }}{{ end }}"
-        },
-        {
-          "type": "az",
-          "style": "plain",
-          "foreground": "p:azure",
-          "template": " \ufd03 {{ .Name }}"
         }
       ]
     },
@@ -113,7 +96,7 @@
           "foreground_templates": [
             "{{ if gt .Code 0 }}p:error{{ end }}"
           ],
-          "template": "\u276f"
+          "template": ">"
         }
       ]
     }

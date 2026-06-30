@@ -63,13 +63,9 @@ function Import-OptionalModuleOnce {
     }
 }
 
-# posh-git => git plugin. Oh My Posh already renders git status, so posh-git is
-# loaded only on the first git command to enable its completions/helpers later.
-function git {
-    Remove-Item Function:\git -ErrorAction SilentlyContinue
-    Import-OptionalModuleOnce posh-git
-    & git @args
-}
+# posh-git is intentionally not imported or wrapped at startup. Run
+# `Import-OptionalModuleOnce posh-git` in a session if its completions/helpers
+# are needed.
 
 # Terminal-Icons => file-type icons in Get-ChildItem / ll, loaded on first use.
 function Enable-TerminalIcons { Import-OptionalModuleOnce Terminal-Icons }
@@ -94,7 +90,6 @@ function Enable-PsFzf {
         }
     }
 }
-Enable-PsFzf
 
 # ---------------------------------------------------------------------------
 # external tool integrations
