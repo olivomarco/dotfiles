@@ -86,5 +86,8 @@ if [ "${machine}" == "mac" ] ; then
   brew install nvm
 fi
 
+# set 7-days minimum to pull npm packages (a form of security prevention from compromised packages)
+npm config set min-release-age 7
+
 echo "NOTE: remember to manually copy your ssh-keys into ${HOME}/.ssh folder, and gpg-keys to ${HOME}/.gnupg"
 echo "done."
