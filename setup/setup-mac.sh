@@ -105,6 +105,8 @@ echo /usr/local/bin/zsh | sudo tee -a /etc/shells
 echo "set the Finder prefs for showing a few different volumes on the Desktop"
 defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
 defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+echo "Set AppleFontSmoothing"
+defaults -currentHost write -g AppleFontSmoothing -int 1
 
 echo "put display to sleep if we're in the top-right hot corner"
 defaults write com.apple.dock wvous-tr-corner -int 10
