@@ -23,7 +23,7 @@ apt-get update
 apt-get install -y git wget curl vim lynx dnsutils bash-completion \
     screen ntpsec jq yq htop psmisc net-tools netcat-openbsd gnupg gnupg-agent nmap gzip plocate rsync \
     sudo dos2unix unzip openssl apt-transport-https \
-    build-essential dkms tasksel zsh ncal gpg tree
+    build-essential dkms tasksel zsh ncal gpg tree lazygit
 
 # # install eza
 # mkdir -p /etc/apt/keyrings

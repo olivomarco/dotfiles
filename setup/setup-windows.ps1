@@ -47,6 +47,7 @@ choco install -y pdfgear
 choco install -y winscp
 # choco install -y wireshark
 choco install -y wget curl git openssh dbeaver kubernetes-cli
+choco install -y lazygit
 choco install -y oraclejdk maven
 choco install -y nodejs
 # choco install -y ngrok nmap

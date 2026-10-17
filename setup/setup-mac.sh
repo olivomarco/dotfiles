@@ -57,6 +57,7 @@ brew install bat
 brew install telnet
 brew install md5sha1sum
 brew install jless
+brew install lazygit
 
 echo "installing more global software via cask/mas..."
 brew install firefox
