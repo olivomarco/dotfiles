@@ -19,6 +19,12 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[credential "https://github.com"]
+	helper =
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/usr/local/bin/gh auth git-credential
 # machine-specific / private git settings (untracked; keeps the repo clean).
 # put per-machine config such as [user] name/email here instead of editing this
 # file. a missing file is silently ignored. included last so it overrides above.
