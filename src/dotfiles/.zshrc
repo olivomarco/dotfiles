@@ -94,7 +94,7 @@ zsh-syntax-highlighting
 zsh-completions
 zsh-autosuggestions
 history
-kube-ps1
+#kube-ps1
 kubectl
 docker
 )
